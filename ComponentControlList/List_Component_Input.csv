@@ -1,0 +1,28 @@
+–¼‘O,Chain,Link
+IOT Exit Sensor(Hot Line),12,100
+Compile Exit Sensor,12,101
+Regi Clutch Sensor(Hot Line),12,102
+Finisher Detect,12,103
+Eject  Home Sensor,12,200
+Sub Paddle Home Sensor,12,201
+Set Clamp Home Sensor,12,202
+Right Tamper Home Sensor,12,210
+Left Tamper Home Sensor,12,211
+Low Staple Sensor,12,220
+Self Priming Sensor,12,221
+Staple Home Sensor ,12,222
+Stacker No Paper Full Sensor,12,230
+Stacker Height Sensor 1,12,231
+Stacker Height Sensor 2,12,232
+Finisher Rear Door Sensor,12,300
+Finisher Staple Door Switch,12,301
+,,
+MBX Rear Door Open Sensor,12,400
+IOT Exit Sensor(Hot Line),12,401
+MBX Vertical Sensor,12,402
+MBX Detect,12,403
+Regi Clutch Sensor(Hot Line),12,404
+1Bin Exit Full Paper Sensor,12,410
+2Bin  Exit Full Paper Sensor,12,411
+3Bin  Exit Full Paper Sensor,12,412
+4Bin  Exit Full Paper Sensor,12,413

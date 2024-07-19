@@ -1,0 +1,40 @@
+// File Name:	CTempInformer.h
+// Description:	Header File of Temp Data Informer
+// Engineer:	Xxxx Xxxx
+// Last Edit:	XX.XX.XX
+// Revision:	00
+//
+// Copyright (C) by Fuji Xerox Advanced Technology Co.,Ltd. All rights reserved.
+//
+
+#ifndef CTempInformer_h
+#define CTempInformer_h
+
+/////////////////////////////////////////////////////////////////////////////////////////
+// Include File
+/////////////////////////////////////////////////////////////////////////////////////////
+
+#include "FinisherCommon.h"
+
+/////////////////////////////////////////////////////////////////////////////////////////
+// Data Definition
+/////////////////////////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////////////////////////////////
+// Function Prototype Definition
+/////////////////////////////////////////////////////////////////////////////////////////
+
+void CTempInformer_Constructor();
+
+void CTempInformer_LoadNvm();
+bool CTempInformer_SaveNvm();
+void CTempInformer_FirstPowerOnInitialize();
+void CTempInformer_VersionInitialize(US previousMajor, US previousMinor, US previousPatch);
+
+#endif // #ifndef CTempInformer_h
+
+// Change History
+// Date:	| Engineer:			| Note:
+// ---------+-------------------+--------------------------------------------------------
+// XX.XX.XX	| Xxxxxx Xxxxxx		| Created this file
+//

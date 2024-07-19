@@ -1,0 +1,52 @@
+// File Name:	CSysFinSttDiagnostic.h
+// Description:	Header File of Finisher State "Diagnostics"
+// Engineer:	Yuichi Hoshino
+// Last Edit:	14.02.08
+// Revision:	00
+//
+// Copyright (C) by Fuji Xerox Advanced Technology Co.,Ltd. All rights reserved.
+//
+
+#ifndef CSysFinSttDiagnostic_h
+#define CSysFinSttDiagnostic_h
+
+/////////////////////////////////////////////////////////////////////////////////////////
+// Include File
+/////////////////////////////////////////////////////////////////////////////////////////
+
+#include "FinisherCommon.h"
+
+#include "CSysFinisherState.h"
+
+
+/////////////////////////////////////////////////////////////////////////////////////////
+// Data Definition
+/////////////////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////////////////
+// Function Prototype Definition
+/////////////////////////////////////////////////////////////////////////////////////////
+
+void CSysFinSttDiagnostic_Constructor();
+
+bool CSysFinSttDiagnostic_CheckTransitionPossibility(EFinisherState nextState);
+void CSysFinSttDiagnostic_Entry(EFinisherState prevState);
+void CSysFinSttDiagnostic_Exit(EFinisherState nextState);
+
+
+/////////////////////////////////////////////////////////////////////////////////////////
+// Function Table Definition
+/////////////////////////////////////////////////////////////////////////////////////////
+
+// --- Public method table of Diagnostics State ---
+extern CSysFinisherState const gSys_FinSttDiagnosticMethod;
+
+
+#endif // #ifndef CSysFinSttDiagnostic_h
+
+// Change History
+// Date:	| Engineer:			| Note:
+// ---------+-------------------+--------------------------------------------------------
+// XX.XX.XX	| Xxxxxx Xxxxxx		| Created this file
+//

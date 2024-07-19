@@ -1,0 +1,35 @@
+//Device Status List,,,,
+//Global A4-Finisher,,,,
+//2015/04/24 GA4-Fin用として生成(申軌植)。,,,,
+,,,,
+//StatusID,ポップアップ閾値(これ以上を表示、未満は消す),Name,Action閾値(これ以上でActionを実施),Action
+B040H,1,Global A4-Fin Download Mode Fail ,0,0
+B140H,1,Global A4-Fin Static Jam,0,0
+B141H,1,Global A4-Fin Compile Tray Exit Sensor ON Jam,0,0
+B142H,1,Global A4-Fin Compile Tray Exit Sensor OFF Jam ,0,0
+B143H,1,Global A4-Fin Set Eject Jam,0,0
+B240H,1,Global A4-Fin NVM Read/Write Fail,0,0
+B241H,1,Global A4-Fin Right Tamper Home Sensor ON Fail,0,0
+B242H,1,Global A4-Fin Right Tamper Home Sensor OFF Fail,0,0
+B243H,1,Global A4-Fin Left Tamper Home Sensor ON Fail,0,0
+B244H,1,Global A4-Fin Left Tamper Home Sensor OFF Fail,0,0
+B245H,1,Global A4-Fin Stapler Fail,0,0
+B246H,1,Global A4-Fin Eject Home SNR ON Fail,0,0
+B247H,1,Global A4-Fin Eject Home SNR OFF Fail,0,0
+B248H,1,Global A4-Fin Set Clamp Home SNR ON Fail,0,0
+B249H,1,Global A4-Fin Set Clamp Home SNR  OFF Fail,0,0
+B24AH,1,Global A4-Fin Sub-Paddle Home SNR ON Fail,0,0
+B24BH,1,Global A4-Fin Sub-Paddle Home SNR OFF Fail,0,0
+B24CH,1,Global A4-Fin Stacker Tray Fail,0,0
+B24DH,1,Global A4-Fin Stacker Tray Upper Limit Fail,0,0
+B24EH,1,Global A4-Fin Stacker Tray Lower Limit Fail,0,0
+B24FH,1,Global A4-Fin Staple Cover Interlock 24V Disconnect Fail,0,0
+B440H,1,Global A4-Fin Rear Cover Interlock Open,0,0
+B441H,1,Global A4-Fin Finisher Staple Cover Open,0,0
+B640H,1,Global A4-Fin  Initialization State,0,0
+B641H,1,Global A4-Fin Stapler Feed Ready Fail,0,0
+B642H,1,Global A4-Fin Staple Supply Level,0,0
+B740H,1,Global A4-Fin Stacker Tray Full Stack,0,0
+B741H,1,Global A4-Fin Stacke Lower Safety Warning,0,0
+B742H,1,Global A4-Fin Staple Status NG,0,0
+B743H,1,Global A4-Fin Scratch Sheet Compile,0,0

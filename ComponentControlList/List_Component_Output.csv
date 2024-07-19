@@ -1,0 +1,41 @@
+–¼‘O,Chain,Link
+Transport Motor(Forward/Low(NVM_V2) Speed),12,10
+Transport Motor(Forward/Middle(NVM_V3) Speed),12,11
+Transport Motor(Forward/High(NVM_V5) Speed),12,12
+Transport Gate Solenoid(Pull),12,13
+Transport Gate Solenoid(Push),12,14
+Transport Gate Solenoid(TEST1),12,15
+Transport Gate Solenoid(TEST2),12,16
+Eject Compile Motor(Forward/Eject),12,20
+Eject Compile Motor(Release/Sub Paddle Speed),12,21
+Set Clamp Clutch ON/OFF,12,22
+Right Tamper Motor(Right/Low Speed(643pps)),12,30
+Right Tamper Motor(Right/Middle Speed(800pps)),12,31
+Right Tamper Motor(Right/High Speed(1337pps)),12,32
+Right Tamper Motor(Left/Low Speed(643pps)),12,33
+Right Tamper Motor(Left/Middle Speed(800pps)),12,34
+Right Tamper Motor(Left/High Speed(1337)),12,35
+Right Tamper Sersor Input Stop,12,36
+Left Tamper Motor(Left/Low Speed(643pps)),12,40
+Left Tamper Motor(Left/Middle Speed(800pps)),12,41
+Left Tamper Motor(Left/High Speed(1337pps)),12,42
+Left Tamper Motor(Right/Low Speed(643pps)),12,43
+Left Tamper Motor(Right/Middle Speed(800pps)),12,44
+Left Tamper Motor(Right/High Speed(1337)),12,45
+Left Tamper Sersor Input Stop,12,46
+Stapler Motor(Forward),12,50
+Stapler Motor(Reverse),12,51
+Stapler Motor(Reverse2),12,52
+Stacker Motor(Lift Up/Low Speed),12,60
+Stacker Motor(Lift Down/1417pps),12,61
+Stacker Motor(TEST),12,62
+Finisher Main 24V Relay OFF,12,70
+,,
+Transport Motor(Forward/Low Speed),12,80
+Transport Motor(Forward/High Speed),12,81
+Transport Gate Solenoid(Pull),12,82
+Transport Gate Solenoid(Push),12,83
+MBX Bin Gate Solenoid 2,12,90
+MBX Bin Gate Solenoid 3,12,91
+MBX Bin Gate Solenoid 4,12,92
+MBX Main 24V Relay OFF,12,93

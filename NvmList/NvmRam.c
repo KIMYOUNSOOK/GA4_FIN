@@ -1,0 +1,11 @@
+///////////////////////////////////////////////////////////
+//  NvmRam.c
+//  Implementation of the NVM Data
+//  Created on:      2016/05/18 10:09:23
+//  Original author: Auto Generate By Excel
+///////////////////////////////////////////////////////////
+
+#include "NvmRam.h"
+
+UC nvmRamArea[NVM_RAM_SIZE];
+

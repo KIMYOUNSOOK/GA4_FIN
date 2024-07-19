@@ -1,0 +1,73 @@
+// File Name:	CCdiFinInSrcConfigurationAttr.c
+// Description:	Implimentation File of Input Source Configuration
+// Engineer:	Yuichi Hoshino
+// Last Edit:	14.04.30
+// Revision:	00
+//
+// Copyright (C) by Fuji Xerox Advanced Technology Co.,Ltd. All rights reserved.
+//
+
+
+/////////////////////////////////////////////////////////////////////////////////////////
+// Include File
+/////////////////////////////////////////////////////////////////////////////////////////
+
+#include "CCdiFinInSrcConfigurationAttr.h"
+
+
+/////////////////////////////////////////////////////////////////////////////////////////
+// Public Data Definition
+/////////////////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////////////////
+// Private Data Definition
+/////////////////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////////////////
+// Private Function Prototype Definition
+/////////////////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////////////////
+// Function Body
+/////////////////////////////////////////////////////////////////////////////////////////
+
+///////////////////////////////////////////////////////////////////
+// Function Name : CCdiFinInSrcConfigurationAttr_AnalyzeAttrPairs
+// Description   : 
+// Parameter     : ]
+// Return        : ]
+///////////////////////////////////////////////////////////////////
+void CCdiFinInSrcConfigurationAttr_AnalyzeAttrPairs(CCdiFinInSrcConfigurationAttr* pThis, UC numAttr)
+{
+	UC *pAttrPtr;
+	UC index, size;
+
+	pThis->mSuper.mNumAttr = numAttr;
+
+	index = 0;
+	while ( (index < pThis->mSuper.mDataSize) && (numAttr != 0) ){
+		pAttrPtr = &(pThis->mSuper.mpAttrData[index]);
+
+		switch ( *pAttrPtr ){
+		case eCdiFinCfgKeyInSrc_Select:		size = CCdiFinCfgAttrInSrc03_GetAttributeSize(pAttrPtr);	break;
+		case eCdiFinCfgKeyInSrc_SizeAlt:	size = CCdiFinCfgAttrInSrcC0_GetAttributeSize(pAttrPtr);	break;
+		case eCdiFinCfgKeyInSrc_IregSize:	size = CCdiFinCfgAttrInSrcC1_GetAttributeSize(pAttrPtr);	break;
+		default:								return;							// Unknown Attribute Key(Fail Safe)
+		}
+
+		pThis->mSuper.mSetIndex[*pAttrPtr] = index;
+		index += size;
+
+		numAttr--;
+	}
+}
+
+
+// Change History
+// Date:	| Engineer:			| Note:
+// ---------+-------------------+--------------------------------------------------------
+// 14.04.30	| Yuichi Hoshino	| Created this file
+//
