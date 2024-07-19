@@ -13,10 +13,10 @@
 // 13.10.15 | Nishizawa Mitsuyuki | Created this file.(CH-Finisher SubCPU Rev006 Base)
 // Revision 000
 // 15.01.28 | Atsushi Morikawa    | Log Function Addition
-// 13.03.27 | Hoshino Yuichi      | ï¿½Oï¿½tï¿½ï¿½ï¿½tï¿½ï¿½ï¿½bï¿½Vï¿½ï¿½ï¿½Î‰ï¿½
-// 13.03.27 | Hoshino Yuichi      | PARï¿½|ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½Oï¿½ï¿½ï¿½ï¿½ï¿½íœ
+// 13.03.27 | Hoshino Yuichi      | ŠO•t‚¯ƒtƒ‰ƒbƒVƒ…‘Î‰
+// 13.03.27 | Hoshino Yuichi      | PARƒ|[ƒŠƒ“ƒOˆ—íœ
 // Revision 001
-// 15.04.01	| Shin.KS			  | 10msï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½1msï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÏX(Interruptï¿½ï¿½ï¿½gï¿½pï¿½ï¿½ï¿½È‚ï¿½Sensorï¿½ï¿½ï¿½ï¿½ï¿½Ì‚ï¿½ï¿½ï¿½)
+// 15.04.01	| Shin.KS			  | 10msüŠúˆ—‚ğ1msüŠúˆ—•ÏX(Interrupt‚ğg—p‚µ‚È‚¢Sensorˆ—‚Ì‚½‚ß)
 // Revision 002(TBD)
 
 #include "Common.h"
@@ -41,18 +41,17 @@
 void Debug_Notify(DD_EventID eventID, void* arg);
 #endif
 
-// ï¿½ï¿½ Event
+// Ÿ Event
 typedef struct  {
 	DD_EventID eventID;
 	DD_EventUserID userID;
 	UC* pMsg;
-	
 } DD_EVT_TYPE;
 
 static UL timerCnt1ms = 0;
 
-// Notifyï¿½Öï¿½ï¿½ï¿½Ç‰ï¿½ï¿½ï¿½ï¿½ï¿½ê‡ï¿½É‚ï¿½"Event.h"ï¿½ï¿½"enum EventUserID"ï¿½ï¿½
-// EventUser_IDï¿½ï¿½Ç‰ï¿½ï¿½ï¿½ï¿½ANotify()ï¿½ï¿½EventUser_IDï¿½Ì•ï¿½ï¿½Ñ‚ğ“¯‚ï¿½ï¿½É‚ï¿½ï¿½é‚±ï¿½ï¿½
+// NotifyŠÖ”‚ğ’Ç‰Á‚·‚éê‡‚É‚Í"Event.h"‚Ì"enum EventUserID"‚É
+// EventUser_ID‚ğ’Ç‰Á‚µANotify()‚ÆEventUser_ID‚Ì•À‚Ñ‚ğ“¯‚¶‚É‚·‚é‚±‚Æ
 void (* const notifyFunc[evuTypeLast_ID])(DD_EventID, UC*) = {
 	DD_STM_Notify,
 	DD_WDT_Notify,
@@ -69,23 +68,23 @@ void (* const notifyFunc[evuTypeLast_ID])(DD_EventID, UC*) = {
 } ;
 
 typedef enum {
-	tsUnused_ID,		// ï¿½ï¿½ï¿½gï¿½pï¿½ï¿½ï¿½
-	tsTick_ID,			// ï¿½vï¿½ï¿½ï¿½ï¿½
-	tsCanceled_ID,		// ï¿½Lï¿½ï¿½ï¿½ï¿½ï¿½Zï¿½ï¿½ï¿½Ï‚ï¿½
-	tsTimeout_ID		// ï¿½^ï¿½Cï¿½ï¿½ï¿½Aï¿½Eï¿½gï¿½ï¿½ï¿½iï¿½Cï¿½xï¿½ï¿½ï¿½gï¿½Lï¿½ï¿½ï¿½[ï¿½É“oï¿½^ï¿½Ï‚İj
+	tsUnused_ID,		// –¢g—pó‘Ô
+	tsTick_ID,			// Œv‘ª’†
+	tsCanceled_ID,		// ƒLƒƒƒ“ƒZƒ‹Ï‚İ
+	tsTimeout_ID		// ƒ^ƒCƒ€ƒAƒEƒg’†iƒCƒxƒ“ƒgƒLƒ…[‚É“o˜^Ï‚İj
 } DD_EVT_TIMER_STATE;
-// ï¿½ï¿½ EventTimer
+// Ÿ EventTimer
 typedef struct{
 	DD_EventUserID userID;
 	UC eventTimerID;
 	DD_EVT_TIMER_STATE state;
-	UC lapCount;		// ï¿½ï¿½ï¿½ï¿½Timeoutï¿½ï¿½ï¿½ï¿½ï¿½ê‡ï¿½ÉŒï¿½Dï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½é‚½ï¿½ß‚ÌƒJï¿½Eï¿½ï¿½ï¿½^ï¿½iï¿½ï¿½ï¿½ó•¡ï¿½Timeoutï¿½Cï¿½xï¿½ï¿½ï¿½gï¿½ï¿½ï¿½Lï¿½ï¿½ï¿½[ï¿½É‘ï¿½ï¿½İ‚ï¿½ï¿½é‚±ï¿½Æ‚ï¿½ï¿½ï¿½ï¿½è“¾ï¿½é‚½ï¿½ßj
+	UC lapCount;		// •¡”Timeout‚µ‚½ê‡‚ÉŒã—Dæ‚ğÀŒ»‚·‚é‚½‚ß‚ÌƒJƒEƒ“ƒ^iŒ»ó•¡”TimeoutƒCƒxƒ“ƒg‚ªƒLƒ…[‚É‘¶İ‚·‚é‚±‚Æ‚ª‚ ‚è“¾‚é‚½‚ßj
 	US count;
 	void* arg;
 } DD_EVT_TIMER_TYPE;
 
 static DD_EVT_TIMER_TYPE timerQueue[timerLast_ID];
-void   (*TMRFUNC)();     															 	/* MSP 1msï¿½Jï¿½Eï¿½ï¿½ï¿½gï¿½Öï¿½ï¿½Ö‚Ìƒ|ï¿½Cï¿½ï¿½ï¿½^     */
+void   (*TMRFUNC)();     															 	/* MSP 1msƒJƒEƒ“ƒgŠÖ”‚Ö‚Ìƒ|ƒCƒ“ƒ^     */
 
 static void DD_EVT_Timeout(void* arg);
 
@@ -95,28 +94,28 @@ US dbgCnt = 0;
 
 //=============================================================================
 // Function Name : DD_EVT_Receive
-// Description   : EventQueueï¿½ï¿½ï¿½ï¿½Eventï¿½ï¿½ï¿½ï¿½ï¿½oï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Eventï¿½ï¿½Ê’mï¿½ï¿½ï¿½ï¿½
+// Description   : EventQueue‚©‚çEvent‚ğæ‚èo‚µˆ¶æ‚ÖEvent‚ğ’Ê’m‚·‚é
 // Parameter     : -
 // Return        : -
-// Note          : MainLoopï¿½ï¿½ï¿½ï¿½Callï¿½ï¿½ï¿½ï¿½ï¿½
+// Note          : MainLoop‚©‚çCall‚³‚ê‚é
 //=============================================================================
 callt void DD_EVT_Receive(void)
 {
 	UC* pMsg;
 	DD_EVT_TYPE* pEvent;
 
-	while ( LIB_rcv_mbf(eMbfDdHigh, &pMsg) > 0 ) {										// High Priorityï¿½ï¿½Eventï¿½ï¿½ï¿½ï¿½ï¿½oï¿½ï¿½ï¿½Iï¿½ï¿½ï¿½ï¿½Ü‚ï¿½
+	while ( LIB_rcv_mbf(eMbfDdHigh, &pMsg) > 0 ) {										// High Priority‚ÌEvent‚ğæ‚èo‚µI‚¦‚é‚Ü‚Å
 		pEvent = (DD_EVT_TYPE*)pMsg;
 		notifyFunc[(UC)(pEvent->userID)](pEvent->eventID, pEvent->pMsg);
 	}
 
-	if ( LIB_rcv_mbf(eMbfDdLow, &pMsg) > 0 ) {											// Low Priorityï¿½ï¿½Eventï¿½ï¿½ï¿½oï¿½ï¿½ï¿½ï¿½ï¿½{
+	if ( LIB_rcv_mbf(eMbfDdLow, &pMsg) > 0 ) {											// Low Priority‚ÌEventæ‚èo‚µÀ{
 		pEvent = (DD_EVT_TYPE*)pMsg;
-		if ((pEvent->eventID == evTimeout_ID)) {										// Timeoutï¿½ï¿½(EnQueueï¿½ï¿½)ï¿½ï¿½Event_CancelTimerï¿½ï¿½ï¿½ï¿½ï¿½ê‡
+		if ((pEvent->eventID == evTimeout_ID)) {										// TimeoutŒã(EnQueueŒã)‚ÉEvent_CancelTimer‚µ‚½ê‡
 			timerQueue[*(pEvent->pMsg)].lapCount --;
 			if ((timerQueue[*(pEvent->pMsg)].state == tsCanceled_ID)
-		     || (timerQueue[*(pEvent->pMsg)].lapCount > 0)) {							// ï¿½Lï¿½ï¿½ï¿½ï¿½ï¿½Zï¿½ï¿½ï¿½Ï‚İ‚Ìê‡ï¿½Aï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í‚Pï¿½Â‚ï¿½Timer IDï¿½É‘Î‚ï¿½ï¿½Ä•ï¿½ï¿½ï¿½Timeoutï¿½ï¿½ï¿½ï¿½ï¿½İ‚ï¿½ï¿½ï¿½ê‡
-			 																			// ï¿½ï¿½ï¿½Pï¿½Â‚ï¿½Timer IDï¿½É‘Î‚ï¿½ï¿½ï¿½Timeoutï¿½Í‚Pï¿½Â‚Ì‚İ—Lï¿½ï¿½ï¿½Å‚ï¿½ï¿½ï¿½iï¿½ï¿½Dï¿½ï¿½j
+		     || (timerQueue[*(pEvent->pMsg)].lapCount > 0)) {							// ƒLƒƒƒ“ƒZƒ‹Ï‚İ‚Ìê‡A‚à‚µ‚­‚Í‚P‚Â‚ÌTimer ID‚É‘Î‚µ‚Ä•¡”Timeout‚ª‘¶İ‚·‚éê‡
+			 																			// ¦‚P‚Â‚ÌTimer ID‚É‘Î‚µ‚ÄTimeout‚Í‚P‚Â‚Ì‚İ—LŒø‚Å‚ ‚éiŒã—Dæj
 				return ;
 			}
 		}
@@ -128,13 +127,13 @@ callt void DD_EVT_Receive(void)
 
 //=============================================================================
 // Function Name : DD_EVT_Put
-// Description   : Eventï¿½ï¿½EventQueueï¿½oï¿½^ï¿½ï¿½ï¿½ï¿½
-// Parameter     : eventID : Eventï¿½ï¿½ID
-//               : userID  : ï¿½ï¿½ï¿½ï¿½ï¿½EventUserï¿½ï¿½ID
-//               : pMsg    : ï¿½ï¿½ï¿½ï¿½É’Ê’mï¿½ï¿½ï¿½ï¿½fï¿½[ï¿½^ï¿½Ìæ“ªï¿½|ï¿½Cï¿½ï¿½ï¿½^
-//               : size    : ï¿½ï¿½ï¿½ï¿½É’Ê’mï¿½ï¿½ï¿½ï¿½fï¿½[ï¿½^ï¿½ÌƒTï¿½Cï¿½Y
+// Description   : Event‚ğEventQueue“o˜^‚·‚é
+// Parameter     : eventID : Event‚ÌID
+//               : userID  : ˆ¶æ‚ÌEventUser‚ÌID
+//               : pMsg    : ˆ¶æ‚É’Ê’m‚·‚éƒf[ƒ^‚Ìæ“ªƒ|ƒCƒ“ƒ^
+//               : size    : ˆ¶æ‚É’Ê’m‚·‚éƒf[ƒ^‚ÌƒTƒCƒY
 // Return        : -
-// Note          : ï¿½Ä‚Ñoï¿½ï¿½ï¿½pï¿½xï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ß‚ï¿½calltï¿½ï¿½éŒ¾ï¿½ï¿½ï¿½Äï¿½ï¿½sï¿½ï¿½ï¿½xï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+// Note          : ŒÄ‚Ño‚µ•p“x‚ª‚‚¢‚½‚ß‚Écallt‚ğéŒ¾‚µ‚ÄÀs‘¬“x‚ğŒüã
 //=============================================================================
 callt void DD_EVT_Put(DD_EventID eventID, DD_EventUserID userID, UC *pMsg, SS size)
 {
@@ -143,31 +142,31 @@ callt void DD_EVT_Put(DD_EventID eventID, DD_EventUserID userID, UC *pMsg, SS si
 	event.eventID	= eventID;
 	event.userID	= userID;
 	event.pMsg		= pMsg;
-	size += 2;										// eventIDï¿½ï¿½userIDï¿½ï¿½ï¿½ï¿½ï¿½Z
+	size += 2;										// eventID‚ÆuserID•ª‰ÁZ
 
-	if ( eventID > evGoNext_ID ) {					// Low Priorityï¿½Ìê‡
+	if ( eventID > evGoNext_ID ) {					// Low Priority‚Ìê‡
 		LIB_snd_mbf(eMbfDdLow, (UC*)&event, sizeof(event));
 	}
-	else {											// High Priorityï¿½Ìê‡
+	else {											// High Priority‚Ìê‡
 		LIB_snd_mbf(eMbfDdHigh, (UC*)&event, sizeof(event));
 	}
 }
 
 //=============================================================================
 // Function Name : DD_EVT_SetTimer
-// Description   : TimerTableï¿½Éƒ^ï¿½Cï¿½}ï¿½ï¿½oï¿½^ï¿½ï¿½ï¿½ï¿½
-// Parameter     : time          : ï¿½İ’èï¿½ï¿½
-//               : userID        : timeoutï¿½Ì’Ê’mï¿½ï¿½ï¿½EventUserï¿½ï¿½ID(ï¿½ï¿½EventUserï¿½ï¿½ID)
-//               : eventTimerID  : timerï¿½ï¿½ID(Timeoutï¿½ï¿½ï¿½É‚ï¿½Notifyï¿½Öï¿½ï¿½Ìˆï¿½ï¿½ï¿½ï¿½Éİ’è‚³ï¿½ï¿½ï¿½)
+// Description   : TimerTable‚Éƒ^ƒCƒ}‚ğ“o˜^‚·‚é
+// Parameter     : time          : İ’èŠÔ
+//               : userID        : timeout‚Ì’Ê’mæ‚ÌEventUser‚ÌID(©EventUser‚ÌID)
+//               : eventTimerID  : timer‚ÌID(Timeout‚É‚ÍNotifyŠÖ”‚Ìˆø”‚Éİ’è‚³‚ê‚é)
 // Return        : -
-// Note          : ï¿½dï¿½ï¿½ï¿½Zï¿½bï¿½gï¿½ÍŒï¿½Dï¿½ï¿½
+// Note          : d•¡ƒZƒbƒg‚ÍŒã—Dæ
 //=============================================================================
 void DD_EVT_SetTimer(US time, DD_EventUserID userID, DD_EventTimerID eventTimerID, void *arg)
 {
 	DD_EVT_TIMER_TYPE* pTimer = &timerQueue[eventTimerID];
 	UC lockKey = 0;
 
-	DD_EVT_CancelTimer(eventTimerID);				// ï¿½ï¿½Dï¿½ï¿½Æ‚ï¿½ï¿½é‚½ï¿½ß‘Oï¿½Ìƒ^ï¿½Cï¿½}ï¿½ï¿½ï¿½~
+	DD_EVT_CancelTimer(eventTimerID);				// Œã—Dæ‚Æ‚·‚é‚½‚ß‘O‚Ìƒ^ƒCƒ}‚ğ’â~
 
 	lockKey = LIB_GetKey();
 	LIB_Lock();
@@ -188,11 +187,11 @@ void DD_EVT_SetTimer(US time, DD_EventUserID userID, DD_EventTimerID eventTimerI
 
 //=============================================================================
 // Function Name : DD_EVT_CancelTimer
-// Description   : ï¿½İ’è‚µï¿½ï¿½Timerï¿½ï¿½ï¿½Lï¿½ï¿½ï¿½ï¿½ï¿½Zï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-// Parameter     : eventTimerID : timerï¿½ï¿½ID
+// Description   : İ’è‚µ‚½Timer‚ğƒLƒƒƒ“ƒZƒ‹‚·‚é
+// Parameter     : eventTimerID : timer‚ÌID
 // Return        : -
-// Note          : ï¿½Rï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÉŠï¿½ï¿½ï¿½Timeoutï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½EventQueueï¿½ï¿½Timeoutï¿½Cï¿½xï¿½ï¿½ï¿½gï¿½ï¿½ï¿½Ï‚Ü‚ï¿½Ä‚ï¿½ï¿½Ä‚ï¿½
-//               : ï¿½ï¿½ï¿½ï¿½Timeoutï¿½Cï¿½xï¿½ï¿½ï¿½gï¿½ï¿½ï¿½Ê’mï¿½ï¿½ï¿½ï¿½È‚ï¿½ï¿½æ‚¤ï¿½ÉHï¿½ì‚·ï¿½ï¿½
+// Note          : ƒR[ƒ‹‚µ‚½‚ÉŠù‚ÉTimeout‚µ‚Ä‚¢‚ÄEventQueue‚ÉTimeoutƒCƒxƒ“ƒg‚ªÏ‚Ü‚ê‚Ä‚¢‚Ä‚à
+//               : ‚»‚ÌTimeoutƒCƒxƒ“ƒg‚ª’Ê’m‚³‚ê‚È‚¢‚æ‚¤‚ÉHì‚·‚é
 //=============================================================================
 void DD_EVT_CancelTimer(DD_EventTimerID eventTimerID)
 {
@@ -230,7 +229,7 @@ void DD_EVT_Init(void)
 	DD_TAU_EntryCallback(DD_SOFTWARE_TIMER_CH, DD_EVT_Timeout, 0);
 	TMRFUNC = NULL;
 
-	// TimerQueueï¿½Ìï¿½ï¿½ï¿½ï¿½ï¿½
+	// TimerQueue‚Ì‰Šú‰»
 	for ( index = 0; index < timerLast_ID; index++ ) {
 		timerQueue[index].count = 0;
 		timerQueue[index].lapCount = 0;
@@ -254,7 +253,7 @@ UL DD_EVT_GetCurrentTime(void)
 // Description   : -
 // Parameter     : -
 // Return        : -
-// Note          : Timerï¿½ï¿½ï¿½ï¿½ï¿½İ“ï¿½ï¿½ï¿½ï¿½ï¿½Rï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+// Note          : TimerŠ„‚İ“à‚©‚çƒR[ƒ‹‚³‚ê‚é
 //=============================================================================
 static void DD_EVT_Timeout(void* arg)
 {
@@ -274,7 +273,7 @@ static void DD_EVT_Timeout(void* arg)
 		pTimer++;
 	}
 
-	// 10msï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½1msï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÏX(Interruptï¿½ï¿½ï¿½gï¿½pï¿½ï¿½ï¿½È‚ï¿½Sensorï¿½ï¿½ï¿½ï¿½ï¿½Ì‚ï¿½ï¿½ï¿½), By Shin.KS
+	// 10msüŠúˆ—‚ğ1msüŠúˆ—•ÏX(Interrupt‚ğg—p‚µ‚È‚¢Sensorˆ—‚Ì‚½‚ß), By Shin.KS
 	// if ( ++cnt == 10 ) {
 	//	DD_EVT_Put(evStart_ID, evuDD_DIO_ID, 0, 0);
 	//	cnt = 0;
@@ -282,14 +281,14 @@ static void DD_EVT_Timeout(void* arg)
 	DD_EVT_Put(evStart_ID, evuDD_DIO_ID, 0, 0);
 
 
-	if ( TMRFUNC != NULL ) {														// MSPï¿½ÌƒCï¿½xï¿½ï¿½ï¿½gï¿½^ï¿½Cï¿½}ï¿½[ï¿½Jï¿½Eï¿½ï¿½ï¿½gï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½s
+	if ( TMRFUNC != NULL ) {														// MSP‚ÌƒCƒxƒ“ƒgƒ^ƒCƒ}[ƒJƒEƒ“ƒgˆ—‚ğÀs
 		TMRFUNC();
 	}
 }
 
 //=============================================================================
 // Function Name : DD_EVT_EntryCallback
-// Description   : ï¿½Rï¿½[ï¿½ï¿½ï¿½oï¿½bï¿½Nï¿½Öï¿½ï¿½Ì“oï¿½^
+// Description   : ƒR[ƒ‹ƒoƒbƒNŠÖ”‚Ì“o˜^
 // Parameter     :
 // Return        :
 // Note          :
