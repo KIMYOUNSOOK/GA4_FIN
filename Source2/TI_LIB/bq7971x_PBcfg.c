@@ -1,0 +1,158 @@
+#include "bq7971x_regs.h"
+#include "bq7971x_cfg.h"
+
+
+static const BQ_DevCfg   zDevCfg_1[TIBMS_MAX_BMICS] =
+{
+     /* Note : * Cells / GPIO / BB / Uv Disable configuration for individual BMIC    */
+    {
+        0x3FFFFu, 0x3FCu, 0x00u,        /*uNCellsCfg , uNGpioCfg , uNBBCfg */
+        { 0x2Cu, 0x0Cu },               /* uDev_Conf[2] */
+        { 0x00u, 0x12u, 0x00u, 0x00u, 0x12u, 0x02u }, /*uGpio_Conf[6] */
+        { 0x00u, 0x00u, 0x00u },        /*uBBVC_Posn*/
+        { 0x00u, 0x00u, 0x00u },        /*uUV_Disable */
+    },
+    {
+        0x3FFFFu, 0x3FCu, 0x00u,
+        { 0x2Cu, 0x0Cu },
+        { 0x00u, 0x12u, 0x00u, 0x00u, 0x12u, 0x02u },
+        { 0x00u, 0x00u, 0x00u },
+        { 0x00u, 0x00u, 0x00u },      
+    },
+    {
+        0x3FFFFu, 0x3FCu, 0x00u,
+        { 0x2Cu, 0x0Cu },
+        { 0x00u, 0x12u, 0x00u, 0x00u, 0x12u, 0x02u },
+        { 0x00u, 0x00u, 0x00u },
+        { 0x00u, 0x00u, 0x00u },
+    },
+    {
+        0x3FFFFu, 0x3FCu, 0x00u,
+        { 0x2Cu, 0x0Cu },
+        { 0x00u, 0x12u, 0x00u, 0x00u, 0x12u, 0x02u },
+        { 0x00u, 0x00u, 0x00u },
+        { 0x00u, 0x00u, 0x00u },
+    },
+    {
+        0x3FFFFu, 0x3FCu, 0x00u,
+        { 0x2Cu, 0x0Cu },
+        { 0x00u, 0x12u, 0x00u, 0x00u, 0x12u, 0x02u },
+        { 0x00u, 0x00u, 0x00u },
+        { 0x00u, 0x00u, 0x00u },
+    },
+    {
+        0x3FFFFu, 0x3FCu, 0x00u,
+        { 0x2Cu, 0x0Cu },
+        { 0x00u, 0x12u, 0x00u, 0x00u, 0x12u, 0x02u },
+        { 0x00u, 0x00u, 0x00u },
+        { 0x00u, 0x00u, 0x00u },
+    },
+    {
+        0x3FFFFu, 0x3FCu, 0x00u,
+        { 0x2Cu, 0x0Cu },
+        { 0x00u, 0x12u, 0x00u, 0x00u, 0x12u, 0x02u },
+        { 0x00u, 0x00u, 0x00u },
+        { 0x00u, 0x00u, 0x00u },
+    },
+    {
+        0x3FFFFu, 0x3FCu, 0x00u,
+        { 0x2Cu, 0x0Cu },
+        { 0x00u, 0x12u, 0x00u, 0x00u, 0x12u, 0x02u },
+        { 0x00u, 0x00u, 0x00u },
+        { 0x00u, 0x00u, 0x00u },
+    },
+    {
+        0x3FFFFu, 0x3FCu, 0x00u,
+        { 0x2Cu, 0x0Cu },
+        { 0x00u, 0x12u, 0x00u, 0x00u, 0x12u, 0x02u },
+        { 0x00u, 0x00u, 0x00u },
+        { 0x00u, 0x00u, 0x00u },
+    },
+    {
+        0x3FFFFu, 0x3FCu, 0x00u,
+        { 0x2Cu, 0x0Cu },
+        { 0x00u, 0x12u, 0x00u, 0x00u, 0x12u, 0x02u },
+        { 0x00u, 0x00u, 0x00u },
+        { 0x00u, 0x00u, 0x00u },
+    },
+    {
+        0x3FFFFu, 0x3FCu, 0x00u,
+        { 0x2Cu, 0x0Cu },
+        { 0x00u, 0x12u, 0x00u, 0x00u, 0x12u, 0x02u },
+        { 0x00u, 0x00u, 0x00u },
+        { 0x00u, 0x00u, 0x00u },
+    },
+    {
+        0x3FFFFu, 0x3FCu, 0x00u,
+        { 0x2Cu, 0x0Cu },
+        { 0x00u, 0x12u, 0x00u, 0x00u, 0x12u, 0x02u },
+        { 0x00u, 0x00u, 0x00u },
+        { 0x00u, 0x00u, 0x00u },
+    }
+};
+
+const BQ_Config  bqConfig =
+{
+    &zDevCfg_1[0],                         /* pDevCfg */
+
+    /* Note: Master Register configuration used during initialization and diagnostic
+     * Each value is corresponding registers in the BQ7971x Data sheet.     * */
+    /* BQ NVM Register Settings */
+    {
+        {   0x0Cu,  0x0Cu  },          /* uDev_Conf */     
+        0x00u,                         /* uComm_Conf */
+        {   0x00u,  0x00u,  0x00u  },  /* uBBVC_Posn */
+ 
+        0x00u,                         /* uAdc_Conf */
+        {   0x00u,  0x00u  },          /* uOVUV_Thresh */          
+        0x00u,                         /* uOTUT_Thresh */
+        {   0x03u,  0xF0u, 0x00u  },   /* uUV_Disable */            
+        {   0x00u,  0x1Fu  },          /* uFault_Msk */            
+        
+        {   0x00u,  0x00u  },          /* uCS_Adc_Cal */     
+        {   0x00u,  0x00u  },          /* uOC_Conf */      
+        0x00u,                         /* uIddq_Conf */
+        {   //2,1   4,3    6,5    8,7    10,9   0,11
+            0x12u, 0x12u, 0x12u, 0x12u, 0x12u, 0x12u  /* uGpio_Conf */
+        },
+        {   0x00u, 0x00u, 0x00u, 0x00u, 
+            0x00u, 0x00u, 0x00u, 0x00u, 0x00u   /* uVcell_Offset */                
+        },
+    },
+
+    /* BQ Control Register settings */
+    {
+        {   0x00u,  0x01u  },               /* uControl */         
+       // {   0x00u,  0x2Cu,  0x00u, 0x00u }, /* uAdc_Ctrl */          
+        {   0x01u,  0x2Cu,  0x00u, 0x00u }, /* uAdc_Ctrl */          
+        
+        {   0x3Bu,   /* VCELL_THR 256mV. */ /* uDiag_Adc_Ctrl */
+            0x07u,   /* GPIO_THR 8 mV (absolute) or 0.200% (ratiometric). */
+            0x00u
+        },
+        {   0x00u,  0x00u,   },             /* uDiag_Misc_Ctrl */           
+       
+        {   0x00u,  0x00u,  0x00u,  0x00u,  /* uCB_Cell_Ctrl */                                              
+            0x00u,  0x00u,  0x00u,  0x00u,
+            0x00u,  0x00u,  0x00u,  0x00u,
+            0x00u,  0x00u,  0x00u,  0x00u,
+            0x00u,  0x00u            
+        },
+            0x00u,                      /* uVCBDone_Thresh */
+            0x00u,                      /* uOTCB_Thresh */
+
+        {   0x00u,    3u },             /* uOVUV_Ctrl */
+            
+        {   0x00u,    3u },             /* uOTUT_Ctrl */
+              
+        {   0x00u,   0x00u, 0x00u },    /* uBal_Ctrl */
+            
+        {   0x00u,    0x00u  },         /* uFault_RST */        
+        
+            0x00u,                      /* uOC_Ctrl */           
+    },
+};
+
+/*********************************************************************************************************************
+ * End of File: bq7971x_PBcfg.c
+ *********************************************************************************************************************/
